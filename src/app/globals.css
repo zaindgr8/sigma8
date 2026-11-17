@@ -48,3 +48,109 @@ body {
   background-color: #C6A15B;
   color: #0B0B0D;
 }
+
+/* ——— Sigma 8 premium motion (pure CSS, no libraries) ——— */
+
+/* Scroll reveal: slow, short rise + fade. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gold hairline that draws itself in when revealed. */
+.rule-draw {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+.reveal-visible .rule-draw {
+  transform: scaleX(1);
+}
+
+/* Slow drift for the hero rings backdrop. */
+@keyframes sigma-drift {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(-14px, 10px, 0) rotate(1.2deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+.animate-rings {
+  animation: sigma-drift 48s ease-in-out infinite;
+}
+
+/* Gentle float for the member pass + seal pill. */
+@keyframes sigma-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float {
+  animation: sigma-float 7s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: sigma-float 9s ease-in-out 1.2s infinite;
+}
+
+/* Slow breathing glow on the gold lens of the 8 mark. */
+@keyframes sigma-lens {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.animate-lens {
+  animation: sigma-lens 5s ease-in-out infinite;
+}
+
+/* Soft gold sheen sweeping across primary buttons on hover. */
+.btn-gold {
+  position: relative;
+  overflow: hidden;
+}
+.btn-gold::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.btn-gold:hover::after {
+  transform: translateX(120%);
+}
+
+/* Match moment: rings draw together. */
+@keyframes sigma-match {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-match {
+  animation: sigma-match 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rule-draw {
+    transform: none;
+    transition: none;
+  }
+  .animate-rings,
+  .animate-float,
+  .animate-float-slow,
+  .animate-lens,
+  .animate-match {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

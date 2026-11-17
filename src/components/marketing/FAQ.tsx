@@ -1,12 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import { Reveal, Eyebrow } from "./Reveal";
 
 const FAQS = [
   {
     question: "Who can join Sigma 8?",
     answer:
       "Membership is by application and approval only. Founders with real traction and accredited investors actively allocating capital in Dubai and the wider GCC.",
+  },
+  {
+    question: "How does verification work?",
+    answer:
+      "The Dubai committee reviews every application — track record and cheque capacity for investors, registration and traction for founders. Typically within 48 hours.",
   },
   {
     question: "How is investor identity kept private?",
@@ -18,19 +24,27 @@ const FAQS = [
     answer:
       "No. Sigma 8 is an introduction and matchmaking platform only. It does not hold funds, give investment advice, or arrange deals.",
   },
+  {
+    question: "What does membership cost?",
+    answer:
+      "Season 1 founding members are admitted with no upfront listing fees.",
+  },
 ];
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   return (
-    <section id="faq" className="py-20 px-6 border-t border-white/5">
+    <section id="faq" className="py-24 px-6 border-t border-white/5">
       <div className="max-w-3xl mx-auto">
-        <h2
-          className="font-serif text-3xl text-center mb-10"
-          style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
-        >
-          Questions
-        </h2>
+        <Reveal className="text-center mb-10">
+          <Eyebrow>07 — Questions</Eyebrow>
+          <h2
+            className="font-serif text-3xl sm:text-4xl mt-5"
+            style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+          >
+            Frequently addressed questions
+          </h2>
+        </Reveal>
         <div className="space-y-3">
           {FAQS.map((faq, idx) => {
             const isOpen = openIndex === idx;
