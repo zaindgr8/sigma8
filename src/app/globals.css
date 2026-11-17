@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0B0B0D;
+  --foreground: #F4F1EA;
+  --obsidian: #0B0B0D;
+  --graphite: #1C1C20;
+  --graphite-2: #26262B;
+  --ivory: #F4F1EA;
+  --stone: #8A8780;
+  --champagne: #C6A15B;
+  --champagne-dim: rgba(198, 161, 91, 0.15);
+  --line: rgba(244, 241, 234, 0.08);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-obsidian: var(--obsidian);
+  --color-graphite: var(--graphite);
+  --color-graphite-2: var(--graphite-2);
+  --color-ivory: var(--ivory);
+  --color-stone: var(--stone);
+  --color-champagne: var(--champagne);
+  --color-champagne-dim: var(--champagne-dim);
+  --color-line: var(--line);
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: #0B0B0D;
+  color: #F4F1EA;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0B0B0D;
+  color: #F4F1EA;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #C6A15B;
+  color: #0B0B0D;
 }
