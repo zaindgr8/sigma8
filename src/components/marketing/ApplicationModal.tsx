@@ -216,8 +216,11 @@ export function ApplicationModal({ isOpen, initialRole = "founder", onClose }: A
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
-              {/* Scrollable fields — the submit bar below stays pinned. */}
-              <div className="min-h-0 flex-1 overflow-y-auto px-6 sm:px-8 py-6 space-y-5">
+              {/* Scrollable fields — the submit bar below stays pinned.
+                  Generous bottom padding + scroll padding so the last field
+                  can scroll fully clear of the pinned footer and is never
+                  left half-hidden behind it at the bottom of the view. */}
+              <div className="min-h-0 flex-1 overflow-y-auto px-6 sm:px-8 pt-6 pb-12 scroll-pt-4 scroll-pb-12 space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="Full name" required>
                     <input type="text" required autoComplete="name" placeholder="Your full name" value={f.fullName} onChange={(e) => set("fullName", e.target.value)} className={inputCls} />

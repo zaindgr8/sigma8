@@ -39,7 +39,13 @@ export default function Home() {
       <FinalCTA onOpenApply={openApply} />
       <Footer />
 
-      <ApplicationModal isOpen={modalOpen} initialRole={modalRole} onClose={() => setModalOpen(false)} />
+      {/*
+        key={modalRole}: the modal's tab state initialises from initialRole
+        once, on mount — without the key, opening "Apply as Investor" after
+        "Apply as Founder" would reopen on the stale Founder tab. Remounting
+        per requested role makes every open land on the tab that was clicked.
+      */}
+      <ApplicationModal key={modalRole} isOpen={modalOpen} initialRole={modalRole} onClose={() => setModalOpen(false)} />
     </main>
   );
 }
