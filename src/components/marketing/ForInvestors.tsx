@@ -88,3 +88,4 @@ export function ForInvestors({ onOpenApply }: ForInvestorsProps) {
     </section>
   );
 }
+

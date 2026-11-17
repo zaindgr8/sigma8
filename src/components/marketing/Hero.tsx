@@ -130,3 +130,4 @@ export function Hero({ onOpenApply }: HeroProps) {
     </section>
   );
 }
+

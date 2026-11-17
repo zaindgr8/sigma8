@@ -88,3 +88,4 @@ export function ForFounders({ onOpenApply }: ForFoundersProps) {
     </section>
   );
 }
+

@@ -90,3 +90,4 @@ export function VerifiedSeal({
     </div>
   );
 }
+

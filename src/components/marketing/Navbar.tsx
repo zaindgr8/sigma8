@@ -157,3 +157,4 @@ export function Navbar({ onOpenApply }: NavbarProps) {
     </header>
   );
 }
+
