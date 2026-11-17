@@ -48,8 +48,9 @@ export function Navbar({ onOpenApply }: NavbarProps) {
 
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-2 rounded-lg text-[#8A8780] hover:text-[#F4F1EA] hover:bg-white/5 transition-colors"
+          className="md:hidden p-2.5 rounded-lg text-[#8A8780] hover:text-[#F4F1EA] hover:bg-white/5 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
           aria-label="Toggle menu"
+          aria-expanded={open}
         >
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             {open ? (
@@ -65,17 +66,17 @@ export function Navbar({ onOpenApply }: NavbarProps) {
         <div className="md:hidden px-6 pt-3 pb-6 bg-[#101013] border-b border-white/10">
           <div className="flex flex-col space-y-3 pt-2">
             {LINKS.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-xs uppercase tracking-wider text-[#8A8780] hover:text-[#F4F1EA] py-1">
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-xs uppercase tracking-wider text-[#8A8780] hover:text-[#F4F1EA] py-3 min-h-[44px] flex items-center">
                 {l.label}
               </a>
             ))}
-            <a href="/status" onClick={() => setOpen(false)} className="text-xs uppercase tracking-wider text-[#8A8780] py-1">Check status</a>
-            <a href="/member" onClick={() => setOpen(false)} className="text-xs uppercase tracking-wider text-[#8A8780] py-1">Member</a>
-            <a href="/admin" onClick={() => setOpen(false)} className="text-xs uppercase tracking-wider text-[#8A8780] py-1">Admin</a>
+            <a href="/status" onClick={() => setOpen(false)} className="text-xs uppercase tracking-wider text-[#8A8780] py-3 min-h-[44px] flex items-center">Check status</a>
+            <a href="/member" onClick={() => setOpen(false)} className="text-xs uppercase tracking-wider text-[#8A8780] py-3 min-h-[44px] flex items-center">Member</a>
+            <a href="/admin" onClick={() => setOpen(false)} className="text-xs uppercase tracking-wider text-[#8A8780] py-3 min-h-[44px] flex items-center">Admin</a>
           </div>
           <button
             onClick={() => { setOpen(false); onOpenApply("founder"); }}
-            className="w-full mt-4 py-2.5 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase tracking-wider"
+            className="w-full mt-4 py-3 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase tracking-wider"
           >
             Apply
           </button>

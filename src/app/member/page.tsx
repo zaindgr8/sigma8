@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import React, { useState } from "react";
 import {
@@ -75,14 +76,17 @@ export default function MemberPage() {
 
   if (!status) {
     return (
-      <main className="min-h-screen bg-[#0B0B0D] text-[#F4F1EA] flex flex-col items-center justify-center px-6">
-        <a href="/" className="text-xs uppercase tracking-wider text-[#8A8780] hover:text-[#F4F1EA] mb-10">← Sigma 8</a>
+      <main className="min-h-screen min-h-dvh bg-[#0B0B0D] text-[#F4F1EA] flex flex-col items-center justify-center px-4 sm:px-6 py-10">
+        <Link href="/" className="text-xs uppercase tracking-wider text-[#8A8780] hover:text-[#F4F1EA] mb-10">← Sigma 8</Link>
         <h1 className="font-serif text-4xl mb-2" style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}>Member portal</h1>
         <p className="text-sm text-[#8A8780] mb-8">Approved members only. Enter your email.</p>
-        <form onSubmit={enter} className="w-full max-w-sm space-y-3">
-          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com"
-            className="w-full px-4 py-3 rounded-lg bg-[#141417] border border-white/10 text-sm focus:outline-none focus:border-[#C6A15B]" />
-          <button className="w-full py-3 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase tracking-wider">Enter</button>
+        <form onSubmit={enter} className="w-full max-w-sm space-y-4">
+          <div>
+            <label htmlFor="member-email" className="block text-xs font-medium text-[#A39E93] uppercase tracking-wider mb-1.5">Your email</label>
+            <input id="member-email" type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com"
+              className="w-full px-4 py-3 min-h-[48px] rounded-lg bg-[#141417] border border-white/10 text-[15px] focus:outline-none focus:border-[#C6A15B]" />
+          </div>
+          <button className="w-full min-h-[52px] py-3.5 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase tracking-wider">Enter</button>
         </form>
         {error && <p className="text-xs text-red-400 mt-4">{error}</p>}
       </main>
@@ -95,17 +99,17 @@ export default function MemberPage() {
       <main className="min-h-screen bg-[#0B0B0D] text-[#F4F1EA] flex flex-col items-center justify-center px-6 text-center">
         <h1 className="font-serif text-4xl text-[#C6A15B] mb-3" style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}>{titles[status] ?? status}</h1>
         <p className="text-sm text-[#8A8780] max-w-md">Member access opens only after the Sigma 8 committee approves your application.</p>
-        <a href="/status" className="mt-6 text-xs uppercase tracking-wider text-[#C6A15B] underline">Check status</a>
+        <Link href="/status" className="mt-6 text-xs uppercase tracking-wider text-[#C6A15B] underline">Check status</Link>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#0B0B0D] text-[#F4F1EA] px-6 py-10">
+    <main className="min-h-screen bg-[#0B0B0D] text-[#F4F1EA] px-4 sm:px-6 py-8 sm:py-10">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-2">
           <h1 className="font-serif text-3xl" style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}>Member portal</h1>
-          <a href="/" className="text-xs uppercase tracking-wider text-[#8A8780]">← Home</a>
+          <Link href="/" className="text-xs uppercase tracking-wider text-[#8A8780]">← Home</Link>
         </div>
         <p className="text-xs text-[#8A8780] mb-6">
           {role === "investor" ? "Approved investor" : "Approved founder"}
@@ -114,9 +118,9 @@ export default function MemberPage() {
         {notice && <p className="text-xs text-[#C6A15B] mb-4">{notice}</p>}
         {error && <p className="text-xs text-red-400 mb-4">{error}</p>}
 
-        <div className="flex gap-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-8">
           {(["discover", "requests", "matches"] as const).map((t) => (
-            <button key={t} onClick={() => setTab(t)} className={`px-4 py-2 rounded-full text-xs uppercase tracking-wider ${tab === t ? "bg-[#C6A15B] text-[#0B0B0D] font-semibold" : "bg-[#1C1C20] text-[#8A8780]"}`}>
+            <button key={t} onClick={() => setTab(t)} className={`min-h-[40px] px-4 py-2 rounded-full text-xs uppercase tracking-wider ${tab === t ? "bg-[#C6A15B] text-[#0B0B0D] font-semibold" : "bg-[#1C1C20] text-[#8A8780]"}`}>
               {t} {t === "requests" && requests.length > 0 ? `(${requests.filter((r) => r.status === "pending").length})` : ""}
             </button>
           ))}
@@ -135,7 +139,7 @@ export default function MemberPage() {
                 </p>
                 <p className="text-sm text-[#F4F1EA]/80 mt-3 leading-relaxed">{str(st.description)}</p>
                 <p className="text-xs text-[#8A8780] mt-3">{str(st.deck_unlocked) ? "Deck unlocked (matched)." : "Deck locked until match."}</p>
-                <button onClick={() => doInterest(String(st.owner_id), String(st.id))} className="mt-4 px-5 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase tracking-wider">Express interest</button>
+                <button onClick={() => doInterest(String(st.owner_id), String(st.id))} className="mt-4 min-h-[44px] px-5 py-2.5 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase tracking-wider">Express interest</button>
               </article>
             ))}
             {role === "founder" && investors.map((inv) => (
@@ -146,10 +150,10 @@ export default function MemberPage() {
                 <p className="text-xs text-[#8A8780] mt-2">
                   {str(inv.investor_type)} · ${(num(inv.ticket_min_usd) ?? 0).toLocaleString()} – ${(num(inv.ticket_max_usd) ?? 0).toLocaleString()} · {str(inv.base_city)}
                 </p>
-                <div className="flex gap-2 mt-4">
-                  <button onClick={() => { if (!myStartupId) { setNotice("Add your startup first — request intro needs your startup."); return; } doInterest(String(inv.user_id), myStartupId); }} className="px-4 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase tracking-wider">Request intro</button>
-                  <button onClick={async () => { const r = await getInvestorReveal(email, String(inv.user_id)); if (r.ok) setReveal(r.profile ?? r.private ?? {}); else setNotice(r.error ?? "Not revealed yet."); }} className="px-4 py-2 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase tracking-wider">Reveal (on match)</button>
-                  <button onClick={() => passTarget(email, String(inv.user_id))} className="px-4 py-2 text-xs uppercase tracking-wider text-[#8A8780]">Pass</button>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  <button onClick={() => { if (!myStartupId) { setNotice("Add your startup first — request intro needs your startup."); return; } doInterest(String(inv.user_id), myStartupId); }} className="min-h-[44px] px-4 py-2.5 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase tracking-wider">Request intro</button>
+                  <button onClick={async () => { const r = await getInvestorReveal(email, String(inv.user_id)); if (r.ok) setReveal(r.profile ?? r.private ?? {}); else setNotice(r.error ?? "Not revealed yet."); }} className="min-h-[44px] px-4 py-2.5 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase tracking-wider">Reveal (on match)</button>
+                  <button onClick={() => passTarget(email, String(inv.user_id))} className="min-h-[44px] px-4 py-2.5 text-xs uppercase tracking-wider text-[#8A8780]">Pass</button>
                 </div>
               </article>
             ))}
@@ -175,8 +179,8 @@ export default function MemberPage() {
                 </div>
                 {str(r.status) === "pending" && (r.to_user === email || true) && (
                   <div className="flex gap-2">
-                    <button onClick={() => doRespond(String(r.id), true)} className="px-4 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Accept</button>
-                    <button onClick={() => doRespond(String(r.id), false)} className="px-4 py-2 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase">Decline</button>
+                    <button onClick={() => doRespond(String(r.id), true)} className="min-h-[44px] px-4 py-2.5 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Accept</button>
+                    <button onClick={() => doRespond(String(r.id), false)} className="min-h-[44px] px-4 py-2.5 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase">Decline</button>
                   </div>
                 )}
               </div>
@@ -191,7 +195,7 @@ export default function MemberPage() {
               <div key={String(m.id)} className="rounded-xl bg-[#141417] border border-white/5 p-5">
                 <p className="font-serif text-lg" style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}>{str((m.startups as Row | undefined)?.name)}</p>
                 <p className="text-xs text-[#8A8780] mt-1">A verified match.</p>
-                <button onClick={() => openChat(String(m.id))} className="mt-3 px-4 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Open chat</button>
+                <button onClick={() => openChat(String(m.id))} className="mt-3 min-h-[44px] px-4 py-2.5 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Open chat</button>
               </div>
             ))}
             {chat && (
@@ -203,8 +207,8 @@ export default function MemberPage() {
                   {chat.messages.length === 0 && <p className="text-sm text-[#8A8780]">Say hello — chat unlocks only inside a match.</p>}
                 </div>
                 <form onSubmit={send} className="flex gap-2">
-                  <input value={chatBody} onChange={(e) => setChatBody(e.target.value)} placeholder="Message…" className="flex-1 px-4 py-2 rounded-lg bg-[#0B0B0D] border border-white/10 text-sm focus:outline-none focus:border-[#C6A15B]" />
-                  <button className="px-5 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Send</button>
+                  <input value={chatBody} onChange={(e) => setChatBody(e.target.value)} placeholder="Message…" aria-label="Message" className="flex-1 min-w-0 px-4 py-3 min-h-[48px] rounded-lg bg-[#0B0B0D] border border-white/10 text-[15px] focus:outline-none focus:border-[#C6A15B]" />
+                  <button className="min-h-[48px] px-5 py-3 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase shrink-0">Send</button>
                 </form>
               </div>
             )}

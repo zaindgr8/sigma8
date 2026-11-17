@@ -59,10 +59,10 @@ export function Hero({ onOpenApply }: HeroProps) {
               </button>
             </div>
 
-            <p className="mt-7 text-xs text-[#8A8780] tracking-wide">
-              <span className="text-[#C6A15B]">✓</span> $250M+ Verified Cheque Capacity
-              <span className="mx-3 text-white/15">·</span>
-              <span className="text-[#C6A15B]">✓</span> Strict Pre-Screening
+            <p className="mt-7 text-xs text-[#8A8780] tracking-wide flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1">
+              <span><span className="text-[#C6A15B]">✓</span> $250M+ Verified Cheque Capacity</span>
+              <span className="text-white/15" aria-hidden="true">·</span>
+              <span><span className="text-[#C6A15B]">✓</span> Strict Pre-Screening</span>
             </p>
           </Reveal>
 
@@ -87,7 +87,7 @@ export function Hero({ onOpenApply }: HeroProps) {
                   interactive={true}
                 />
               </div>
-              <div className="animate-float-slow absolute -bottom-6 -left-4 z-30 p-2 rounded-2xl bg-[#0B0B0D]/90 border border-white/10 backdrop-blur-md shadow-xl flex items-center gap-3">
+              <div className="animate-float-slow absolute -bottom-4 sm:-bottom-6 left-0 sm:-left-4 z-30 p-2 rounded-2xl bg-[#0B0B0D]/90 border border-white/10 backdrop-blur-md shadow-xl flex items-center gap-3">
                 <span className="animate-lens inline-flex">
                   <VerifiedSeal size={52} glow={true} />
                 </span>

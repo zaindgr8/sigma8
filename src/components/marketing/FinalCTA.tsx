@@ -11,7 +11,7 @@ interface FinalCTAProps {
 export function FinalCTA({ onOpenApply }: FinalCTAProps) {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-[#0e0e11] relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#C6A15B]/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[700px] h-[350px] bg-[#C6A15B]/5 rounded-full blur-[140px] pointer-events-none" />
       <Reveal className="max-w-3xl mx-auto text-center relative z-10">
         <span className="animate-lens inline-flex justify-center p-4 rounded-2xl bg-[#141417] border border-white/10 mb-6">
           <LogoMark size={44} lensGlow={true} />

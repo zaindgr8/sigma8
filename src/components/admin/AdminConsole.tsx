@@ -72,7 +72,7 @@ export function AdminConsole({ data }: { data: AdminData }) {
   ];
 
   return (
-    <main className="min-h-screen bg-[#0B0B0D] text-[#F4F1EA] px-6 py-10">
+    <main className="min-h-screen bg-[#0B0B0D] text-[#F4F1EA] px-4 sm:px-6 py-8 sm:py-10">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
           <h1 className="font-serif text-3xl" style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}>Admin console</h1>
@@ -102,7 +102,7 @@ export function AdminConsole({ data }: { data: AdminData }) {
 
         <div className="flex flex-wrap gap-2 mb-6">
           {tabs.map((t) => (
-            <button key={t.id} onClick={() => setTab(t.id)} className={`px-4 py-2 rounded-full text-xs uppercase tracking-wider ${tab === t.id ? "bg-[#C6A15B] text-[#0B0B0D] font-semibold" : "bg-[#1C1C20] text-[#8A8780]"}`}>
+            <button key={t.id} onClick={() => setTab(t.id)} className={`min-h-[40px] px-4 py-2 rounded-full text-xs uppercase tracking-wider ${tab === t.id ? "bg-[#C6A15B] text-[#0B0B0D] font-semibold" : "bg-[#1C1C20] text-[#8A8780]"}`}>
               {t.label}{t.badge ? ` (${t.badge})` : ""}
             </button>
           ))}
@@ -121,16 +121,16 @@ export function AdminConsole({ data }: { data: AdminData }) {
                       <p className="font-serif text-lg" style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}>
                         {str(prof?.full_name) || str(answers.fullName)}
                       </p>
-                      <p className="text-xs text-[#8A8780] mt-1">
+                      <p className="text-xs text-[#8A8780] mt-1 break-words">
                         {str(a.role)} · {str(prof?.email) || str(answers.email)} · {str(answers.startupName) || str(answers.firmName) || ""} · {fmtDate(a.submitted_at)}
                       </p>
                       <p className="text-xs mt-1"><span className="text-[#C6A15B] uppercase tracking-wider">{str(a.status)}</span>{prof?.member_number ? ` · Member No. ${String(prof.member_number).padStart(4, "0")}` : ""}</p>
                     </div>
                     {str(a.status) === "pending" && (
                       <div className="flex gap-2">
-                        <button onClick={() => decide(String(a.id), "approved")} className="px-4 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Approve</button>
-                        <button onClick={() => decide(String(a.id), "waitlisted")} className="px-4 py-2 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase">Waitlist</button>
-                        <button onClick={() => decide(String(a.id), "rejected")} className="px-4 py-2 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase">Reject</button>
+                        <button onClick={() => decide(String(a.id), "approved")} className="min-h-[40px] px-4 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Approve</button>
+                        <button onClick={() => decide(String(a.id), "waitlisted")} className="min-h-[40px] px-4 py-2 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase">Waitlist</button>
+                        <button onClick={() => decide(String(a.id), "rejected")} className="min-h-[40px] px-4 py-2 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase">Reject</button>
                       </div>
                     )}
                   </div>
@@ -177,14 +177,14 @@ export function AdminConsole({ data }: { data: AdminData }) {
             {data.members.map((m) => (
               <div key={String(m.id)} className="rounded-xl bg-[#141417] border border-white/5 p-4 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm">{str(m.full_name)} · {str(m.email)}</p>
+                  <p className="text-sm break-words">{str(m.full_name)} · {str(m.email)}</p>
                   <p className="text-xs text-[#8A8780] mt-1">{str(m.role)} · {str(m.status)}{m.member_number ? ` · No. ${String(m.member_number).padStart(4, "0")}` : ""}</p>
                 </div>
                 {str(m.status) === "approved" && (
-                  <button onClick={async () => { await setMemberStatus({ userId: String(m.id), status: "suspended" }); refresh(); }} className="px-4 py-2 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase">Suspend</button>
+                  <button onClick={async () => { await setMemberStatus({ userId: String(m.id), status: "suspended" }); refresh(); }} className="min-h-[40px] px-4 py-2 rounded-full bg-[#1C1C20] border border-white/10 text-xs uppercase">Suspend</button>
                 )}
                 {str(m.status) === "suspended" && (
-                  <button onClick={async () => { await setMemberStatus({ userId: String(m.id), status: "approved" }); refresh(); }} className="px-4 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Reinstate</button>
+                  <button onClick={async () => { await setMemberStatus({ userId: String(m.id), status: "approved" }); refresh(); }} className="min-h-[40px] px-4 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Reinstate</button>
                 )}
               </div>
             ))}
@@ -206,26 +206,26 @@ export function AdminConsole({ data }: { data: AdminData }) {
         {tab === "settings" && (
           <form onSubmit={async (e) => { e.preventDefault(); const r = await updateSettings(settingsForm); setNotice(r.ok ? "Settings saved." : (r.error ?? "Failed.")); refresh(); }} className="rounded-xl bg-[#141417] border border-white/5 p-5 space-y-4 max-w-md">
             <label className="block text-xs text-[#8A8780]">Founder intro limit (per 7 days)
-              <input type="number" min={1} value={settingsForm.founder_weekly_intro_limit} onChange={(e) => setSettingsForm({ ...settingsForm, founder_weekly_intro_limit: Number(e.target.value) })} className="mt-1 w-full px-3 py-2 rounded-lg bg-[#0B0B0D] border border-white/10 text-sm text-[#F4F1EA]" />
+              <input type="number" min={1} value={settingsForm.founder_weekly_intro_limit} onChange={(e) => setSettingsForm({ ...settingsForm, founder_weekly_intro_limit: Number(e.target.value) })} className="mt-1 w-full px-3 py-3 min-h-[48px] rounded-lg bg-[#0B0B0D] border border-white/10 text-[15px] text-[#F4F1EA]" />
             </label>
             <label className="block text-xs text-[#8A8780]">Pass cooldown (days)
-              <input type="number" min={1} value={settingsForm.pass_cooldown_days} onChange={(e) => setSettingsForm({ ...settingsForm, pass_cooldown_days: Number(e.target.value) })} className="mt-1 w-full px-3 py-2 rounded-lg bg-[#0B0B0D] border border-white/10 text-sm text-[#F4F1EA]" />
+              <input type="number" min={1} value={settingsForm.pass_cooldown_days} onChange={(e) => setSettingsForm({ ...settingsForm, pass_cooldown_days: Number(e.target.value) })} className="mt-1 w-full px-3 py-3 min-h-[48px] rounded-lg bg-[#0B0B0D] border border-white/10 text-[15px] text-[#F4F1EA]" />
             </label>
             <label className="block text-xs text-[#8A8780]">Interest expiry (days)
-              <input type="number" min={1} value={settingsForm.interest_expiry_days} onChange={(e) => setSettingsForm({ ...settingsForm, interest_expiry_days: Number(e.target.value) })} className="mt-1 w-full px-3 py-2 rounded-lg bg-[#0B0B0D] border border-white/10 text-sm text-[#F4F1EA]" />
+              <input type="number" min={1} value={settingsForm.interest_expiry_days} onChange={(e) => setSettingsForm({ ...settingsForm, interest_expiry_days: Number(e.target.value) })} className="mt-1 w-full px-3 py-3 min-h-[48px] rounded-lg bg-[#0B0B0D] border border-white/10 text-[15px] text-[#F4F1EA]" />
             </label>
             <label className="flex items-center gap-2 text-xs text-[#8A8780]">
               <input type="checkbox" checked={settingsForm.applications_open} onChange={(e) => setSettingsForm({ ...settingsForm, applications_open: e.target.checked })} className="accent-[#C6A15B]" />
               Applications open
             </label>
-            <button className="px-5 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Save settings</button>
+            <button className="min-h-[44px] px-5 py-2.5 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase">Save settings</button>
           </form>
         )}
 
         {tab === "database" && (
           <div className="rounded-xl bg-[#141417] border border-white/5 p-5">
             <p className="text-xs text-[#8A8780] mb-4">Live row counts in Supabase (project tnjiuzrucjrppzaqxkkg).</p>
-            <button onClick={loadDb} className="px-5 py-2 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase mb-4">Load counts</button>
+            <button onClick={loadDb} className="min-h-[44px] px-5 py-2.5 rounded-full bg-[#C6A15B] text-[#0B0B0D] text-xs font-semibold uppercase mb-4">Load counts</button>
             {dbCounts && (
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {Object.entries(dbCounts).map(([table, count]) => (
