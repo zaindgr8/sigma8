@@ -1,13 +1,15 @@
 "use server";
 
-import { getServiceClient, getAuthUser, getProfileByEmail } from "@/lib/supabase/server";
+import { getServiceClient, getAuthUser, getProfileByEmail, NOT_CONFIGURED_ERROR } from "@/lib/supabase/server";
 
 export type Role = "founder" | "investor" | "admin";
 
 type DbRow = Record<string, unknown>;
 
 function service() {
-  return getServiceClient();
+  const sb = getServiceClient();
+  if (!sb) throw new Error(NOT_CONFIGURED_ERROR);
+  return sb;
 }
 
 async function settings() {
@@ -22,13 +24,17 @@ async function settings() {
 }
 
 async function requireAdmin() {
-  const user = await getAuthUser();
-  if (!user?.email) return null;
-  const profile = await getProfileByEmail(user.email);
-  if (!profile || (profile as DbRow).role !== "admin" || (profile as DbRow).status !== "approved") {
+  try {
+    const user = await getAuthUser();
+    if (!user?.email) return null;
+    const profile = await getProfileByEmail(user.email);
+    if (!profile || (profile as DbRow).role !== "admin" || (profile as DbRow).status !== "approved") {
+      return null;
+    }
+    return { user, profile: profile as DbRow };
+  } catch {
     return null;
   }
-  return { user, profile: profile as DbRow };
 }
 
 function parseRaise(v: string): number | null {
@@ -427,6 +433,7 @@ export async function passTarget(email: string, targetUserId: string) {
 // ── Admin ───────────────────────────────────────────────────────
 
 export async function getAdminData() {
+  try {
   const admin = await requireAdmin();
   if (!admin) return { ok: false as const, error: "Admin only." };
   const sb = service();
@@ -462,9 +469,13 @@ export async function getAdminData() {
     matches: (matches.data ?? []) as DbRow[],
     settings: (settingsRow.data ?? {}) as DbRow,
   };
+  } catch (e) {
+    return { ok: false as const, error: e instanceof Error ? e.message : "Admin data failed to load." };
+  }
 }
 
 export async function decideApplication(input: { applicationId: string; decision: "approved" | "rejected" | "waitlisted"; notes?: string }) {
+  try {
   const admin = await requireAdmin();
   if (!admin) return { ok: false, error: "Admin only." };
   const sb = service();
@@ -493,25 +504,37 @@ export async function decideApplication(input: { applicationId: string; decision
     details: { member_number: memberNumber },
   });
   return { ok: true, memberNumber };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Decision failed." };
+  }
 }
 
 export async function setMemberStatus(input: { userId: string; status: "approved" | "suspended" }) {
-  const admin = await requireAdmin();
-  if (!admin) return { ok: false, error: "Admin only." };
-  const sb = service();
-  const { error } = await sb.from("profiles").update({ status: input.status }).eq("id", input.userId);
-  return error ? { ok: false, error: error.message } : { ok: true };
+  try {
+    const admin = await requireAdmin();
+    if (!admin) return { ok: false, error: "Admin only." };
+    const sb = service();
+    const { error } = await sb.from("profiles").update({ status: input.status }).eq("id", input.userId);
+    return error ? { ok: false, error: error.message } : { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Failed." };
+  }
 }
 
 export async function updateSettings(input: { founder_weekly_intro_limit?: number; pass_cooldown_days?: number; interest_expiry_days?: number; applications_open?: boolean }) {
-  const admin = await requireAdmin();
-  if (!admin) return { ok: false, error: "Admin only." };
-  const sb = service();
-  const { error } = await sb.from("app_settings").update(input).eq("id", 1);
-  return error ? { ok: false, error: error.message } : { ok: true };
+  try {
+    const admin = await requireAdmin();
+    if (!admin) return { ok: false, error: "Admin only." };
+    const sb = service();
+    const { error } = await sb.from("app_settings").update(input).eq("id", 1);
+    return error ? { ok: false, error: error.message } : { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Failed." };
+  }
 }
 
 export async function getDatabaseOverview() {
+  try {
   const admin = await requireAdmin();
   if (!admin) return { ok: false as const, error: "Admin only." };
   const sb = service();
@@ -522,4 +545,7 @@ export async function getDatabaseOverview() {
     counts[t] = count ?? 0;
   }
   return { ok: true as const, counts };
+  } catch (e) {
+    return { ok: false as const, error: e instanceof Error ? e.message : "Failed." };
+  }
 }

@@ -45,7 +45,11 @@ export function AdminConsole({ data }: { data: AdminData }) {
   };
 
   const signOut = async () => {
-    await getBrowserClient().auth.signOut();
+    try {
+      await getBrowserClient().auth.signOut();
+    } catch {
+      // Supabase not configured — just leave the page.
+    }
     router.push("/admin/login");
     router.refresh();
   };
