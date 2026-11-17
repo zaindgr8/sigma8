@@ -106,8 +106,7 @@ export function Footer() {
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 text-xs">
             <div>
-              &copy; {new Date().getFullYear()} Sigma 8 Technologies Ltd. All
-              rights reserved.
+              &copy; 2026 Sigma 8 Technologies Ltd. All rights reserved.
             </div>
             <div className="text-[10px] font-mono tracking-wider uppercase text-[#C6A15B]">
               Infinite Possibilities · Limitless Growth
